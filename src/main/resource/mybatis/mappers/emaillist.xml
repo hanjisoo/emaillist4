@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="emaillist">
+
+<resultMap id="resultMapList" type="EmaillistVo">
+	<result column="no" property="no"/>
+	<result column="first_name" property="firstName"/>
+	<result column="last_name" property="lastName" />
+	<result column="email" property="email" />
+</resultMap>
+
+
+
+<select id="getListByMap" parameterType="map" resultType="EmaillistVo">
+	<![CDATA[
+		select no, last_name lastName,first_name firstName,email
+		from emaillist
+		where last_name=#{last_name}	
+		or email=#{email}
+	]]>				<!-- 넣을때 키값으로 넣었던 애를 넣어줘 -->
+</select>
+
+
+
+<select id="getByNo" parameterType="int" resultType="EmaillistVo">
+	<![CDATA[
+	select no,last_name lastName, first_name firstName, email
+		from emaillist
+		where no=#{no}
+	
+	]]>
+</select>
+
+<insert id="insert" parameterType="EmaillistVo">
+	<![CDATA[
+		insert into emaillist
+		values(seq_emaillist_no.nextval,
+				#{lastName},#{firstName},#{email})
+	]]>
+</insert>
+
+<select id="getList2" resultMap="resultMapList"> <!-- 위에 mapping이용해서 명칭연결 -->
+	<![CDATA[
+		select no,last_name , first_name , email
+		from emaillist
+		order by no desc
+	]]>
+	</select>
+
+
+<!-- 퀴리문작성 -->						<!-- com.emaillist.vo.EmaillistVo -->
+	<select id="getList" resultType="EmaillistVo"> <!-- 이케쓰면 명칭을 정확하게 써줘야함 -->
+	<![CDATA[
+		select no,last_name lastName, first_name firstName, email
+		from emaillist
+		order by no desc
+	]]>
+	
+	</select>
+
+</mapper>
